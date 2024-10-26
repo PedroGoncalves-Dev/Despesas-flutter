@@ -27,9 +27,10 @@ class MyHome extends StatelessWidget {
           title: const Text('Despesas Pessoais'),
         ),
         body: const Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(
-              width: double.infinity,
               child: Card(
                 elevation: 6,
                 child: Text('Gráfico'),
