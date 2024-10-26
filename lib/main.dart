@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 main() {
@@ -21,12 +23,22 @@ class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-      ),
-      body: const Center(
-        child: Text('Versão inicial'),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Despesas Pessoais'),
+        ),
+        body: const Column(
+          children: <Widget>[
+            SizedBox(
+              width: double.infinity,
+              child: Card(
+                elevation: 6,
+                child: Text('Gráfico'),
+              ),
+            ),
+            Card(
+              child: Text('Lista de transações'),
+            )
+          ],
+        ));
   }
 }
