@@ -11,6 +11,9 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          useMaterial3: true),
       home: MyHomePage(),
     );
   }
@@ -37,23 +40,28 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Despesas Pessoais'),
-        ),
-        body: const Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            SizedBox(
-              child: Card(
-                elevation: 6,
-                child: Text('Gráfico'),
-              ),
+      appBar: AppBar(
+        title: const Text('Despesas Pessoais'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          const SizedBox(
+            child: Card(
+              elevation: 6,
+              color: Colors.blue,
+              child: Text('Gráfico'),
             ),
-            Card(
-              child: Text('Lista de transações'),
-            )
-          ],
-        ));
+          ),
+          Column(
+              children: _transactions
+                  .map((tr) => Card(
+                        child: Text(tr.title),
+                      ))
+                  .toList())
+        ],
+      ),
+    );
   }
 }
