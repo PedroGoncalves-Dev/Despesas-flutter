@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
   bool _estado = false;
 
   // Um método que muda o estado do widget.
-  void _MudarEstado() {
+  void _mudarEstado() {
     // setState é um método que atualiza o estado do widget e reconstrói o widget com o novo estado.
     setState(() {
       // Muda o valor da variável _estado para o oposto do atual.
@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
             ),
             // Um botão que muda o estado do widget quando pressionado.
             ElevatedButton(
-              onPressed: _MudarEstado,
+              onPressed: _mudarEstado,
               child: const Text('Mude o estado'),
             ),
           ],
