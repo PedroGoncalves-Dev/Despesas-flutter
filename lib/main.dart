@@ -1,5 +1,4 @@
 import 'package:despesaspessoais/components/transaction_user.dart';
-import 'package:despesaspessoais/models/transaction.dart';
 
 import 'package:flutter/material.dart';
 
@@ -30,18 +29,21 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Despesas Pessoais'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          const SizedBox(
-            child: Card(
-              elevation: 6,
-              color: Colors.blue,
-              child: Text('Gráfico'),
+      body: SingleChildScrollView(
+        //faz com que possa rolar a tela
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            const SizedBox(
+              child: Card(
+                elevation: 6,
+                color: Colors.blue,
+                child: Text('Gráfico'),
+              ),
             ),
-          ),
-          TransactionUser(),
-        ],
+            TransactionUser(),
+          ],
+        ),
       ),
     );
   }
