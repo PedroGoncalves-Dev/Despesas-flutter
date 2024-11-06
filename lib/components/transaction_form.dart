@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class TransactionForm extends StatelessWidget {
@@ -6,7 +8,18 @@ class TransactionForm extends StatelessWidget {
 
   final void Function(String, double) onSubmit;
 
-  TransactionForm(this.onSubmit);
+  TransactionForm({required this.onSubmit});
+
+  _onSubmit() {
+    final title = titleController.text;
+    final value = double.tryParse(valueController.text) ?? 0;
+
+    if (title.isEmpty || value <= 0) {
+      return;
+    }
+
+    onSubmit(title, value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +31,17 @@ class TransactionForm extends StatelessWidget {
           children: <Widget>[
             TextField(
               controller: titleController,
+              onSubmitted: (_) => _onSubmit(),
               decoration: const InputDecoration(
                 labelText: 'Titulo',
               ),
             ),
             TextField(
               controller: valueController,
+              keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true), //faz com que aceite apenas números
+              onSubmitted: (_) =>
+                  _onSubmit(), // clickando em ok, ja envia o form
               decoration: const InputDecoration(
                 labelText: 'Valor R\$',
               ),
@@ -31,12 +49,7 @@ class TransactionForm extends StatelessWidget {
             Container(
               margin: const EdgeInsetsDirectional.only(top: 20),
               child: ElevatedButton(
-                onPressed: () {
-                  final title = titleController.text;
-                  final value = double.tryParse(valueController.text) ?? 0.0;
-
-                  onSubmit(title, value);
-                },
+                onPressed: _onSubmit,
                 child: const Text(
                   'Nova transação',
                   style: TextStyle(color: Colors.purple),
