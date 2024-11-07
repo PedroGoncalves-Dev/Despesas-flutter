@@ -17,8 +17,13 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-          useMaterial3: true),
+          useMaterial3: true,
+          fontFamily: 'Montserrat',
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.green,
+            primary: Colors.green,
+            brightness: Brightness.light,
+          )),
       home: MyHomePage(),
     );
   }
@@ -32,19 +37,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Novo tenis de corrida',
-      value: 310.76,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz ',
-      value: 211.30,
-      date: DateTime.now(),
-    ),
+  final List<Transaction> _transactions = [
+    // Transaction(
+    //   id: 't1',
+    //   title: 'Novo tenis de corrida',
+    //   value: 310.76,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Conta de Luz ',
+    //   value: 211.30,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   _addTransaction(String title, double value) {
@@ -85,11 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const SizedBox(
+            SizedBox(
               child: Card(
                 elevation: 6,
-                color: Colors.blue,
-                child: Text('Gráfico'),
+                child: const Text('Gráfico'),
+                color: Theme.of(context).primaryColor,
               ),
             ),
             TransactionList(_transactions),
