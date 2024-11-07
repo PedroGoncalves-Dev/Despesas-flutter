@@ -56,9 +56,9 @@ class _TransactionFormState extends State<TransactionForm> {
               margin: const EdgeInsetsDirectional.only(top: 20),
               child: ElevatedButton(
                 onPressed: _onSubmit,
-                child: const Text(
+                child: Text(
                   'Nova transação',
-                  style: TextStyle(color: Colors.purple),
+                  style: TextStyle(color: Theme.of(context).primaryColor),
                 ),
               ),
             ),
