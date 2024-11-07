@@ -58,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _transactions.add(newTransaction);
     });
+
+    Navigator.of(context).pop(); // é como se ele voltasse na primeira pagina
   }
 
   _openTransactionFormMofal(BuildContext context) {
