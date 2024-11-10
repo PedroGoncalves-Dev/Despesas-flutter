@@ -1,3 +1,4 @@
+import 'package:despesaspessoais/components/chart.dart';
 import 'package:despesaspessoais/components/transaction_form.dart';
 import 'dart:math';
 
@@ -38,26 +39,32 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'Novo tenis de corrida',
-    //   value: 310.76,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Conta de Luz ',
-    //   value: 211.30,
-    //   date: DateTime.now(),
-    // ),
+    Transaction(
+      id: 't1',
+      title: 'Novo tenis de corrida',
+      value: 310.76,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Conta de Luz ',
+      value: 211.30,
+      date: DateTime.now().subtract(const Duration(days: 2)),
+    ),
   ];
+
+  List<Transaction> get _recentTransaction {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
 
   _addTransaction(String title, double value) {
     final newTransaction = Transaction(
       id: Random().nextInt(100).toString(),
       title: title,
       value: value,
-      date: DateTime.now(),
+      date: DateTime.now().subtract(const Duration(days: 3)),
     );
 
     setState(() {
@@ -90,13 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(
-              child: Card(
-                elevation: 6,
-                child: const Text('Gráfico'),
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
+            SizedBox(child: Chart(_recentTransaction)),
             TransactionList(_transactions),
           ],
         ),
