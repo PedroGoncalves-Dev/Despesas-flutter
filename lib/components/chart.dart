@@ -42,14 +42,20 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 5,
       margin: const EdgeInsets.symmetric(horizontal: 15),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedTransaction.map((tr) {
-            return ChartBar(
-                label: tr['day'].toString(),
-                value: (tr['value'] as double),
-                percentege: (tr['value'] as double) / _weekTotalValue);
-          }).toList()),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransaction.map((tr) {
+              return Flexible(
+                fit: FlexFit.tight,
+                child: ChartBar(
+                    label: tr['day'].toString(),
+                    value: (tr['value'] as double),
+                    percentege: (tr['value'] as double) / _weekTotalValue),
+              );
+            }).toList()),
+      ),
     );
   }
 }
