@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:despesaspessoais/components/chart_bar.dart';
 import 'package:despesaspessoais/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -36,8 +39,12 @@ class Chart extends StatelessWidget {
       elevation: 5,
       margin: EdgeInsets.all(20),
       child: Row(
-        children: [],
-      ),
+          children: groupedTransaction.map((tr) {
+        return ChartBar(
+            label: tr['day'].toString(),
+            value: (tr['value'] as double),
+            percentege: 0);
+      }).toList()),
     );
   }
 }
