@@ -1,9 +1,7 @@
 import 'package:despesaspessoais/components/chart.dart';
 import 'package:despesaspessoais/components/transaction_form.dart';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
 
