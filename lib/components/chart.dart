@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:despesaspessoais/components/chart_bar.dart';
 import 'package:despesaspessoais/models/transaction.dart';
 import 'package:flutter/material.dart';
@@ -33,18 +31,25 @@ class Chart extends StatelessWidget {
     });
   }
 
+  double get _weekTotalValue {
+    return groupedTransaction.fold(0.0, (sum, tr) {
+      return sum + (tr['value'] as double);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupedTransaction.map((tr) {
-        return ChartBar(
-            label: tr['day'].toString(),
-            value: (tr['value'] as double),
-            percentege: 0);
-      }).toList()),
+            return ChartBar(
+                label: tr['day'].toString(),
+                value: (tr['value'] as double),
+                percentege: (tr['value'] as double) / _weekTotalValue);
+          }).toList()),
     );
   }
 }
