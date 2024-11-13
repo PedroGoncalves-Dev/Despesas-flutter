@@ -10,64 +10,53 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
-      child: transactions.isEmpty
-          ? Column(
-              children: [
-                Text(
-                  'Nenhuma conta cadastrada',
-                  style: TextStyle(color: Theme.of(context).primaryColor),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                    height: 200,
-                    child: Image.asset('assets/images/waiting.png'))
-              ],
-            )
-          : ListView(
-              children: transactions
-                  .map((tr) => Card(
-                          child: Row(
-                        children: <Widget>[
-                          Container(
+        height: 300,
+        child: transactions.isEmpty
+            ? Column(
+                children: [
+                  Text(
+                    'Nenhuma conta cadastrada',
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                      height: 200,
+                      child: Image.asset('assets/images/waiting.png'))
+                ],
+              )
+            : SizedBox(
+                height: 300, // Defina a altura desejada
+                child: ListView(
+                  //usado para listas
+                  children: transactions
+                      .map((tr) => Card(
+                            elevation: 8,
                             margin: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Theme.of(context).primaryColor)),
-                            child: Text(
-                              'R\$ ${tr.value.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColor,
+                                vertical: 10, horizontal: 15),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 30,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child:
+                                      FittedBox(child: Text('R\$${tr.value}')),
+                                ),
                               ),
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
+                              title: Text(
                                 tr.title,
                                 style: const TextStyle(
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15,
                                 ),
                               ),
-                              Text(
-                                DateFormat('dd MMM y').format(tr.date),
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      )))
-                  .toList()),
-    );
+                              subtitle:
+                                  Text(DateFormat('d MMM y').format(tr.date)),
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ));
   }
 }
