@@ -96,6 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(child: Chart(_recentTransaction)),
+            const SizedBox(
+              height: 20,
+            ),
             TransactionList(_transactions),
           ],
         ),
