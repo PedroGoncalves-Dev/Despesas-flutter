@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double) onSubmit;
@@ -14,6 +15,8 @@ class _TransactionFormState extends State<TransactionForm> {
 
   final valueController = TextEditingController();
 
+  DateTime? _selectedDate;
+
   _onSubmit() {
     final title = titleController.text;
     final value = double.tryParse(valueController.text) ?? 0;
@@ -23,6 +26,23 @@ class _TransactionFormState extends State<TransactionForm> {
     }
 
     widget.onSubmit(title, value);
+  }
+
+  _showDateModal() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
   }
 
   @override
@@ -58,9 +78,16 @@ class _TransactionFormState extends State<TransactionForm> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const Text('Nenhuma data selecionada'),
+                  Expanded(
+                    child: Text(
+                      _selectedDate == null
+                          ? 'Nenhuma data selecionada'
+                          : DateFormat('dd MMM y')
+                              .format(_selectedDate as DateTime),
+                    ),
+                  ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: _showDateModal,
                     child: const Text(
                       'Selecionar data',
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -69,7 +96,7 @@ class _TransactionFormState extends State<TransactionForm> {
                 ],
               ),
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               FilledButton(
                 onPressed: _onSubmit,
                 child: const Text(
