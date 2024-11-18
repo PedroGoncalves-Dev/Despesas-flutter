@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) onSubmit;
+  final void Function(String, double, DateTime) onSubmit;
 
-  TransactionForm({required this.onSubmit});
+  const TransactionForm({super.key, required this.onSubmit});
 
   @override
   State<TransactionForm> createState() => _TransactionFormState();
@@ -12,20 +12,19 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final titleController = TextEditingController();
-
   final valueController = TextEditingController();
-
-  DateTime? _selectedDate;
+  DateTime _selectedDate = DateTime.now();
 
   _onSubmit() {
     final title = titleController.text;
     final value = double.tryParse(valueController.text) ?? 0;
+    final data = _selectedDate;
 
     if (title.isEmpty || value <= 0) {
       return;
     }
 
-    widget.onSubmit(title, value);
+    widget.onSubmit(title, value, data);
   }
 
   _showDateModal() {
@@ -62,28 +61,28 @@ class _TransactionFormState extends State<TransactionForm> {
             ),
             TextField(
               controller: valueController,
-              keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true), //faz com que aceite apenas números
-              onSubmitted: (_) =>
-                  _onSubmit(), // clickando em ok, ja envia o form
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => _onSubmit(),
               decoration: const InputDecoration(
                 labelText: 'Valor R\$',
               ),
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             SizedBox(
               height: 70,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.green,
+                    ),
                     child: Text(
-                      _selectedDate == null
-                          ? 'Nenhuma data selecionada'
-                          : DateFormat('dd MMM y')
-                              .format(_selectedDate as DateTime),
+                      DateFormat('dd MMM y').format(_selectedDate),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                   ElevatedButton(
@@ -99,6 +98,7 @@ class _TransactionFormState extends State<TransactionForm> {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               FilledButton(
                 onPressed: _onSubmit,
+                style: FilledButton.styleFrom(elevation: 8),
                 child: const Text(
                   'Nova transação',
                   style: TextStyle(
