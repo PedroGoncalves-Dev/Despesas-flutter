@@ -10,19 +10,35 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     return transactions.isEmpty
-        ? Column(
-            children: [
-              Text(
-                'Nenhuma conta cadastrada',
-                style: TextStyle(color: Theme.of(context).primaryColor),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                  height: 200, child: Image.asset('assets/images/waiting.png'))
-            ],
+        ? LayoutBuilder(
+            builder: (ctx, constraints) {
+              return Column(
+                children: [
+                  SizedBox(
+                    height: constraints.maxHeight * 0.1,
+                    child: Text(
+                      'Nenhuma conta cadastrada',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: constraints.maxHeight * 0.1,
+                  ),
+                  SizedBox(
+                      height: !isLandscape
+                          ? constraints.maxHeight * 0.7
+                          : constraints.maxHeight * 0.8,
+                      child: Image.asset('assets/images/waiting.png'))
+                ],
+              );
+            },
           )
         : SizedBox(
             height: 300, // Defina a altura desejada
