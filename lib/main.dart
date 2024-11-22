@@ -72,6 +72,12 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pop(); // é como se ele voltasse na primeira pagina
   }
 
+  _removeTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) => tr.id == id);
+    });
+  }
+
   _openTransactionFormMofal(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -80,26 +86,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: [
+        IconButton(
+          onPressed: () => _openTransactionFormMofal(context),
+          icon: const Icon(Icons.add),
+        )
+      ],
+    );
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: [
-          IconButton(
-            onPressed: () => _openTransactionFormMofal(context),
-            icon: const Icon(Icons.add),
-          )
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         //faz com que possa rolar a tela
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(child: Chart(_recentTransaction)),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: availableHeight * 0.3,
+              child: Chart(_recentTransaction),
             ),
-            TransactionList(_transactions),
+            SizedBox(
+              height: availableHeight * 0.05,
+            ),
+            SizedBox(
+                height: availableHeight * 0.65,
+                child: TransactionList(_transactions, _removeTransaction)),
           ],
         ),
       ),

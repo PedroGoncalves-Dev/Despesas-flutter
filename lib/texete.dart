@@ -22,7 +22,6 @@ class Myhome2 extends StatefulWidget {
 
   @override
   State<Myhome2> createState() {
-    // TODO: implement createState
     return _MyhomeState2();
   }
 }
