@@ -36,20 +36,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'Novo tenis de corrida',
-    //   value: 310.76,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Conta de Luz ',
-    //   value: 211.30,
-    //   date: DateTime.now().subtract(const Duration(days: 2)),
-    // ),
-  ];
+  final List<Transaction> _transactions = [];
+
+  bool _showChart = false;
 
   List<Transaction> get _recentTransaction {
     return _transactions.where((tr) {
@@ -86,6 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLandscape = MediaQuery.of(context).orientation ==
+        Orientation.landscape; //captura a orientação do telefone
+
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
       actions: [
@@ -106,16 +98,33 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(
-              height: availableHeight * 0.3,
-              child: Chart(_recentTransaction),
-            ),
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Alterar'),
+                  Switch(
+                    value: _showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        _showChart = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            if (_showChart || !isLandscape)
+              SizedBox(
+                height: availableHeight * 0.3,
+                child: Chart(_recentTransaction),
+              ),
             SizedBox(
               height: availableHeight * 0.05,
             ),
-            SizedBox(
-                height: availableHeight * 0.65,
-                child: TransactionList(_transactions, _removeTransaction)),
+            if (!_showChart || !isLandscape)
+              SizedBox(
+                  height: availableHeight * 0.65,
+                  child: TransactionList(_transactions, _removeTransaction)),
           ],
         ),
       ),
