@@ -46,67 +46,76 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: <Widget>[
-            TextField(
-              controller: titleController,
-              onSubmitted: (_) => _onSubmit(),
-              decoration: const InputDecoration(
-                labelText: 'Título',
-              ),
-            ),
-            TextField(
-              controller: valueController,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => _onSubmit(),
-              decoration: const InputDecoration(
-                labelText: 'Valor R\$',
-              ),
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              height: 70,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.green,
-                    ),
-                    child: Text(
-                      DateFormat('dd MMM y').format(_selectedDate),
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: _showDateModal,
-                    child: const Text(
-                      'Selecionar data',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              FilledButton(
-                onPressed: _onSubmit,
-                style: FilledButton.styleFrom(elevation: 8),
-                child: const Text(
-                  'Nova transação',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 10,
+        child: Padding(
+          padding: EdgeInsets.only(
+              top: 10,
+              right: 10,
+              left: 10,
+              bottom: 10 +
+                  MediaQuery.of(context)
+                      .viewInsets
+                      .bottom), //pega o tamanho do teclado
+          child: Column(
+            children: <Widget>[
+              TextField(
+                controller: titleController,
+                onSubmitted: (_) => _onSubmit(),
+                decoration: const InputDecoration(
+                  labelText: 'Título',
                 ),
               ),
-            ]),
-          ],
+              TextField(
+                controller: valueController,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                onSubmitted: (_) => _onSubmit(),
+                decoration: const InputDecoration(
+                  labelText: 'Valor R\$',
+                ),
+              ),
+              const SizedBox(height: 30),
+              SizedBox(
+                height: 70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.green,
+                      ),
+                      child: Text(
+                        DateFormat('dd MMM y').format(_selectedDate),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: _showDateModal,
+                      child: const Text(
+                        'Selecionar data',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                FilledButton(
+                  onPressed: _onSubmit,
+                  style: FilledButton.styleFrom(elevation: 8),
+                  child: const Text(
+                    'Nova transação',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ]),
+            ],
+          ),
         ),
       ),
     );
