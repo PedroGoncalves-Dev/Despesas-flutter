@@ -78,6 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
     bool isLandscape = MediaQuery.of(context).orientation ==
         Orientation.landscape; //captura a orientação do telefone
 
+    final mediaQuery = MediaQuery.of(context);
+
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
       actions: [
@@ -96,9 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
-    final availableHeight = MediaQuery.of(context).size.height -
+    final availableHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+        mediaQuery.padding.top;
 
     return Scaffold(
       appBar: appBar,
